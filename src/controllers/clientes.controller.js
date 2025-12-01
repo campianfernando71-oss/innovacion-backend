@@ -1,6 +1,7 @@
 import { db } from "../config/db.js";
 
-export const getClientes = async (req, res) => {
+// Obtener todos los clientes activos
+const getClientes = async (req, res) => {
   try {
     const [rows] = await db.query("SELECT * FROM clientes WHERE estado = 1");
     res.json(rows);
@@ -9,8 +10,12 @@ export const getClientes = async (req, res) => {
   }
 };
 
-export const createCliente = async (req, res) => {
+// Crear cliente
+const createCliente = async (req, res) => {
   const { nombre, documento, telefono, direccion, email } = req.body;
+
+  if (!nombre)
+    return res.status(400).json({ message: "El nombre es obligatorio" });
 
   try {
     const [result] = await db.query(
@@ -33,13 +38,15 @@ export const createCliente = async (req, res) => {
   }
 };
 
-export const updateCliente = async (req, res) => {
+// Actualizar cliente
+const updateCliente = async (req, res) => {
   const { id } = req.params;
   const { nombre, documento, telefono, direccion, email, estado } = req.body;
 
   try {
     const [result] = await db.query(
-      `UPDATE clientes SET nombre=?, documento=?, telefono=?, direccion=?, email=?, estado=? 
+      `UPDATE clientes 
+       SET nombre=?, documento=?, telefono=?, direccion=?, email=?, estado=? 
        WHERE id = ?`,
       [nombre, documento, telefono, direccion, email, estado, id]
     );
@@ -53,7 +60,8 @@ export const updateCliente = async (req, res) => {
   }
 };
 
-export const deleteCliente = async (req, res) => {
+// Eliminar cliente (soft delete)
+const deleteCliente = async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -69,4 +77,12 @@ export const deleteCliente = async (req, res) => {
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
+};
+
+// Exportación correcta
+export default {
+  getClientes,
+  createCliente,
+  updateCliente,
+  deleteCliente,
 };
