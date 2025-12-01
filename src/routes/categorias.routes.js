@@ -7,14 +7,12 @@ import {
   deleteCategoria
 } from "../controllers/categorias.controller.js";
 
-import { authRequired } from "../middlewares/auth.js";
-
 const router = Router();
 
-router.get("/", authRequired, getCategorias);
-router.get("/:id", authRequired, getCategoriaById);
-router.post("/", authRequired, createCategoria);
-router.put("/:id", authRequired, updateCategoria);
-router.delete("/:id", authRequired, deleteCategoria);
+router.get("/", getCategorias);
+router.get("/:id", getCategoriaById);
+router.post("/", createCategoria);
+router.put("/:id", updateCategoria);
+router.delete("/:id", deleteCategoria);
 
 export default router;

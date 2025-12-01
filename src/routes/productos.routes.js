@@ -7,14 +7,12 @@ import {
   deleteProducto
 } from "../controllers/productos.controller.js";
 
-import { authRequired } from "../middlewares/auth.js";
-
 const router = Router();
 
-router.get("/", authRequired, getProductos);
-router.get("/:id", authRequired, getProductoById);
-router.post("/", authRequired, createProducto);
-router.put("/:id", authRequired, updateProducto);
-router.delete("/:id", authRequired, deleteProducto);
+router.get("/", getProductos);
+router.get("/:id", getProductoById);
+router.post("/", createProducto);
+router.put("/:id", updateProducto);
+router.delete("/:id", deleteProducto);
 
 export default router;

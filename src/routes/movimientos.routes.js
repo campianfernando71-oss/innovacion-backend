@@ -1,11 +1,11 @@
 import { Router } from "express";
 import { createMovimiento, getMovimientos, getMovimientoById } from "../controllers/movimientos.controller.js";
-import { authRequired } from "../middlewares/auth.js";
 
 const router = Router();
 
-router.get("/", authRequired, getMovimientos);
-router.get("/:id", authRequired, getMovimientoById);
-router.post("/", authRequired, createMovimiento);
+// Rutas sin autenticación
+router.get("/", getMovimientos);
+router.get("/:id", getMovimientoById);
+router.post("/", createMovimiento);
 
 export default router;
